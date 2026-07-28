@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wujaszek</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Animowane tło -->
+    <video autoplay muted loop id="bgVideo">
+    <source src="Video.mov" type="video/mp4">
+    </video>
+
+    <!-- LEWY GÓRNY RÓG EKRANU -->
+    <button id="muteBtn" class="mute-btn" title="Wycisz / Włącz dźwięk">
+        <i class="fa-solid fa-volume-xmark" id="muteIcon"></i>
+    </button>
+
+    <!-- PRAWY GÓRNY RÓG EKRANU -->
+    <div class="top-bar">
+        <span class="location"><i class="fa-solid fa-location-dot"></i> POLSKA</span>
+        <span id="liveClock" class="clock">00:00:00</span>
+    </div>
+
+    <div class="main-layout">
+        
+        <!-- Zegar na żywo w prawym górnym rogu -->
+        <div class="top-bar">
+            <span class="location"><i class="fa-solid fa-location-dot"></i> POLSKA</span>
+            <span id="liveClock" class="clock">00:00:00</span>
+        </div>
+
+        <!-- Główna treść -->
+        <main class="content">
+            
+            <div class="avatar-wrapper">
+                <img src="moj-awatar.jpg" alt="Mój Awatar" class="avatar">
+                <span class="status-dot"></span>
+            </div>
+            
+            <h1 class="title">Wujaszek</h1>
+            
+            <p class="subtitle">
+                <span id="typewriter"></span><span class="cursor">_</span>
+            </p>
+
+            <!-- Tagi z umiejętnościami -->
+            <div class="skills-tags">
+                <span class="tag">Python</span>
+                <span class="tag">Discord Bot Creator</span>
+                <span class="tag">Discord Serwer Creator</span>
+            </div>
+
+            <!-- Przyciski -->
+            <div class="action-buttons">
+                <a href="https://discord.gg/MEGM3JV85z" target="_blank" class="btn btn-primary">
+                    <i class="fa-brands fa-discord"></i> Discord
+                </a>
+                
+                <a href="wujek.synkuu@op.pl" class="btn btn-secondary">
+                    <i class="fa-regular fa-envelope"></i> Kontakt
+                </a>
+            </div>
+
+            <!-- Sociale z dokładnymi linkami do profilu -->
+            <div class="social-icons">
+                <!-- Zamień TWOJA_NAZWA_STEAM na swój identyfikator z profilu Steam -->
+                <a href="https://steamcommunity.com/id/wujek_z_ameryki" target="_blank" title="Steam"><i class="fa-brands fa-steam"></i></a>
+                
+                <!-- Zamień TWOJA_NAZWA_TIKTOK na swój nick na TikToku (z małpką na początku) -->
+                <a href="https://www.tiktok.com/@wujek.synkuu" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Pojedynczy plik muzyki w tle -->
+    <audio id="bgAudio" src="JBEE - 90MPH ft SILLAGE (OFFICIAL VISUALISER).mp3" loop></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
