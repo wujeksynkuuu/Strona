@@ -69,14 +69,16 @@ muteBtn.addEventListener("click", toggleMute);
 
 // Automatyczny start przy pierwszym kliknięciu w dowolne miejsce strony (obejście blokady przeglądarek)
 document.addEventListener('click', () => {
-    if (bgAudio.paused) {
+    if (bgAudio && bgAudio.paused) {
         bgAudio.play().then(() => {
-            muteIcon.className = "fa-solid fa-volume-high";
+            if (muteIcon) muteIcon.className = "fa-solid fa-volume-high";
         }).catch(() => {
-            // Przeglądarka zablokowała autoplay bez kliknięcia w przycisk
+            // Przeglądarka zablokowała autoplay
         });
     }
+}, { once: true });
 
+// Start wideo na telefonach
 const bgVideo = document.getElementById("bgVideo");
 
 if (bgVideo) {
@@ -84,4 +86,5 @@ if (bgVideo) {
         if (bgVideo.paused) {
             bgVideo.play();
         }
-}, { once: true });
+    }, { once: true });
+}
