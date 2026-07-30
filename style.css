@@ -27,7 +27,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow-x: hidden;
-    perspective: 1000px; /* Potrzebne do efektu 3D Tilt */
+    perspective: 1000px;
 }
 
 /* --- KURSOR CUSTOMOWY --- */
@@ -179,6 +179,7 @@ body.hovered .cursor-outline {
     position: relative;
     display: inline-block;
     margin-bottom: 25px;
+    user-select: none;
 }
 
 .avatar {
@@ -188,6 +189,22 @@ body.hovered .cursor-outline {
     object-fit: cover;
     border: 2px solid var(--text-primary);
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+/* --- EASTER EGG: EFEKT GLITCH NA AWATARZE --- */
+.avatar-wrapper.glitch-active .avatar {
+    animation: avatarGlitch 0.15s infinite;
+    filter: contrast(250%) hue-rotate(90deg) invert(0.15);
+    box-shadow: -6px 0 #ff0055, 6px 0 #00ffff;
+}
+
+@keyframes avatarGlitch {
+    0% { transform: translate(0) scale(1); }
+    25% { transform: translate(-5px, 3px) skewX(10deg); }
+    50% { transform: translate(5px, -3px) skewX(-10deg); }
+    75% { transform: translate(-3px, -3px) scale(1.05); }
+    100% { transform: translate(0) scale(1); }
 }
 
 .status-dot {
