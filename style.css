@@ -276,18 +276,25 @@ body {
     margin: 0 0 10px 0;
     font-weight: 900;
     letter-spacing: -2px;
+    color: #ffffff;
     
-    /* Błyszczący animowany gradient */
-    background: linear-gradient(90deg, #ffffff 0%, #71717a 25%, #ffffff 50%, #71717a 75%, #ffffff 100%);
-    background-size: 200% auto;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
+    /* Pulsująca poświata (Glow) */
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6),
+                 0 0 30px rgba(255, 255, 255, 0.3);
     
-    animation: titleShimmer 4s linear infinite;
+    animation: titleGlow 2.5s ease-in-out infinite alternate;
 }
 
-@keyframes titleShimmer {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
+@keyframes titleGlow {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.4),
+                     0 0 20px rgba(255, 255, 255, 0.2);
+    }
+    100% {
+        transform: scale(1.04);
+        text-shadow: 0 0 20px rgba(255, 255, 255, 1),
+                     0 0 40px rgba(255, 255, 255, 0.7),
+                     0 0 60px rgba(255, 255, 255, 0.4);
+    }
 }
