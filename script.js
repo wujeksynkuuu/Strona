@@ -241,14 +241,12 @@ const contentCard = document.querySelector('.content');
 
 if (contentCard) {
     document.addEventListener('mousemove', (e) => {
-        // Efekt wyłączony na telefonach dla wygody
         if (window.innerWidth < 768) return;
 
         const { innerWidth, innerHeight } = window;
         const x = (e.clientX - innerWidth / 2) / (innerWidth / 2);
         const y = (e.clientY - innerHeight / 2) / (innerHeight / 2);
 
-        // Maksymalny kąt pochylenia (w stopniach)
         const maxTilt = 12;
         const tiltX = -y * maxTilt;
         const tiltY = x * maxTilt;
@@ -258,5 +256,68 @@ if (contentCard) {
 
     document.addEventListener('mouseleave', () => {
         contentCard.style.transform = `rotateX(0deg) rotateY(0deg)`;
+    });
+}
+
+
+// --- 9. EASTER EGG: GLITCH NA AWATARZE (5 SZYBKICH KLIKNIĘĆ) ---
+let avatarClickCount = 0;
+let lastAvatarClick = 0;
+const avatarWrapper = document.querySelector('.avatar-wrapper');
+
+function playGlitchAudioEffect() {
+    try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        // Generowanie cyfrowego szumu (Glitch)
+        const bufferSize = audioCtx.sampleRate * 0.35;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+        }
+
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1200, audioCtx.currentTime);
+
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        noise.start();
+    } catch (e) {}
+}
+
+if (avatarWrapper) {
+    avatarWrapper.addEventListener('click', () => {
+        const now = Date.now();
+        
+        if (now - lastAvatarClick < 400) {
+            avatarClickCount++;
+        } else {
+            avatarClickCount = 1;
+        }
+        lastAvatarClick = now;
+
+        if (avatarClickCount >= 5) {
+            avatarClickCount = 0;
+            
+            avatarWrapper.classList.add('glitch-active');
+            playGlitchAudioEffect();
+
+            setTimeout(() => {
+                avatarWrapper.classList.remove('glitch-active');
+            }, 1800);
+        }
     });
 }
