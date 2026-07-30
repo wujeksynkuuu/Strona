@@ -76,4 +76,12 @@ document.addEventListener('click', () => {
             // Przeglądarka zablokowała autoplay bez kliknięcia w przycisk
         });
     }
+
+const bgVideo = document.getElementById("bgVideo");
+
+if (bgVideo) {
+    document.addEventListener('touchstart', () => {
+        if (bgVideo.paused) {
+            bgVideo.play();
+        }
 }, { once: true });
