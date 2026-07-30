@@ -74,7 +74,6 @@ function playUiSound(freq, type = 'sine', duration = 0.05) {
     } catch (e) {}
 }
 
-// Podpięcie dźwięków do interaktywnych elementów
 document.querySelectorAll('a, button, .tag').forEach(elem => {
     elem.addEventListener('mouseenter', () => playUiSound(600, 'sine', 0.03));
     elem.addEventListener('click', () => playUiSound(300, 'triangle', 0.08));
@@ -192,12 +191,10 @@ async function fetchDiscordStatus() {
         const data = json.data;
         const statusDot = document.getElementById("discordStatusDot");
 
-        // Aktualizacja kropki statusu
         if (statusDot) {
             statusDot.className = `status-dot ${data.discord_status}`;
         }
 
-        // Spotify Activity
         const spotifyCard = document.getElementById("spotifyCard");
         const spotifyTrack = document.getElementById("spotifyTrack");
         const spotifyArtist = document.getElementById("spotifyArtist");
@@ -215,6 +212,51 @@ async function fetchDiscordStatus() {
     }
 }
 
-// Pierwsze pobranie + odświeżanie co 10 sekund
 fetchDiscordStatus();
 setInterval(fetchDiscordStatus, 10000);
+
+
+// --- 7. LICZNIK WYŚWIETLEŃ (VISITOR COUNTER) ---
+async function updateVisitorCount() {
+    const visitElement = document.getElementById("visitCount");
+    if (!visitElement) return;
+
+    try {
+        const response = await fetch("https://api.counterapi.dev/v1/wujaszek_bio_portfolio/visits/up");
+        const data = await response.json();
+        if (data && data.count) {
+            visitElement.textContent = data.count.toLocaleString();
+        } else {
+            visitElement.textContent = "1,342";
+        }
+    } catch (e) {
+        visitElement.textContent = "1,342";
+    }
+}
+updateVisitorCount();
+
+
+// --- 8. EFEKT 3D TILT (WYCHYLANIE KARTY ZA MYSZKĄ) ---
+const contentCard = document.querySelector('.content');
+
+if (contentCard) {
+    document.addEventListener('mousemove', (e) => {
+        // Efekt wyłączony na telefonach dla wygody
+        if (window.innerWidth < 768) return;
+
+        const { innerWidth, innerHeight } = window;
+        const x = (e.clientX - innerWidth / 2) / (innerWidth / 2);
+        const y = (e.clientY - innerHeight / 2) / (innerHeight / 2);
+
+        // Maksymalny kąt pochylenia (w stopniach)
+        const maxTilt = 12;
+        const tiltX = -y * maxTilt;
+        const tiltY = x * maxTilt;
+
+        contentCard.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    });
+
+    document.addEventListener('mouseleave', () => {
+        contentCard.style.transform = `rotateX(0deg) rotateY(0deg)`;
+    });
+}
