@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wujaszek</title>
     
-    <link rel="icon" type="image/jpeg" href="favicon.png">
-
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
+    <!-- NIESTANDARDOWY KURSOR -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
+
+    <!-- EKRAN WEJŚCIA (OVERLAY) -->
     <div id="overlay" class="overlay">
         <div class="overlay-content">
             <div class="overlay-title">[ ENTER ]</div>
@@ -24,12 +28,17 @@
         <source src="Video.mov" type="video/mp4">
     </video>
 
-    <!-- LEWY GÓRNY RÓG EKRANU -->
-    <button id="muteBtn" class="mute-btn" title="Wycisz / Włącz dźwięk">
-        <i class="fa-solid fa-volume-xmark" id="muteIcon"></i>
-    </button>
+    <!-- LEWY GÓRNY RÓG - DŹWIĘK I SUWAK -->
+    <div class="audio-control-wrapper">
+        <button id="muteBtn" class="mute-btn" title="Wycisz / Włącz dźwięk">
+            <i class="fa-solid fa-volume-xmark" id="muteIcon"></i>
+        </button>
+        <div class="volume-container">
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+        </div>
+    </div>
 
-    <!-- PRAWY GÓRNY RÓG EKRANU (Zostawiamy TYLKO ten jeden zegar) -->
+    <!-- PRAWY GÓRNY RÓG - ZEGAR -->
     <div class="top-bar">
         <span class="location"><i class="fa-solid fa-location-dot"></i> POLSKA</span>
         <span id="liveClock" class="clock">00:00:00</span>
@@ -37,12 +46,12 @@
 
     <div class="main-layout">
         
-        <!-- Główna treść (stąd usunąłem drugi zdublowany zegar) -->
+        <!-- Główna treść -->
         <main class="content">
             
             <div class="avatar-wrapper">
                 <img src="moj-awatar.jpg" alt="Mój Awatar" class="avatar">
-                <span class="status-dot"></span>
+                <span id="discordStatusDot" class="status-dot offline"></span>
             </div>
             
             <h1 class="title">Wujaszek</h1>
@@ -58,6 +67,15 @@
                 <span class="tag">Discord Serwer Creator</span>
             </div>
 
+            <!-- KARTA SPOTIFY / DISCORD ACTIVITY -->
+            <div id="spotifyCard" class="spotify-card hidden">
+                <i class="fa-brands fa-spotify spotify-icon"></i>
+                <div class="spotify-details">
+                    <span id="spotifyTrack" class="spotify-track">Nazwa utworu</span>
+                    <span id="spotifyArtist" class="spotify-artist">Wykonawca</span>
+                </div>
+            </div>
+
             <!-- Przyciski -->
             <div class="action-buttons">
                 <a href="https://discord.gg/MEGM3JV85z" target="_blank" class="btn btn-primary">
@@ -69,12 +87,9 @@
                 </a>
             </div>
 
-            <!-- Sociale z dokładnymi linkami do profilu -->
+            <!-- Sociale -->
             <div class="social-icons">
-                <!-- Zamień TWOJA_NAZWA_STEAM na swój identyfikator z profilu Steam -->
                 <a href="https://steamcommunity.com/id/wujek_z_ameryki" target="_blank" title="Steam"><i class="fa-brands fa-steam"></i></a>
-                
-                <!-- Zamień TWOJA_NAZWA_TIKTOK na swój nick na TikToku (z małpką na początku) -->
                 <a href="https://www.tiktok.com/@wujek.synkuu" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
             </div>
 
@@ -82,7 +97,7 @@
 
     </div>
 
-    <!-- Pojedynczy plik muzyki w tle -->
+    <!-- Muzyka w tle -->
     <audio id="bgAudio" src="Muzyka.mp3" loop></audio>
 
     <script src="script.js"></script>
