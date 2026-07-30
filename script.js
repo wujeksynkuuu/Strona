@@ -50,34 +50,110 @@ function typeEffect() {
 typeEffect();
 
 
-// --- 3. EKRAN WEJŚCIA (OVERLAY) I AUDIO/VIDEO ---
+// --- 3. DŹWIĘKI UI (WEB AUDIO API) ---
+let audioCtx;
+function playUiSound(freq, type = 'sine', duration = 0.05) {
+    try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch (e) {}
+}
+
+// Podpięcie dźwięków do interaktywnych elementów
+document.querySelectorAll('a, button, .tag').forEach(elem => {
+    elem.addEventListener('mouseenter', () => playUiSound(600, 'sine', 0.03));
+    elem.addEventListener('click', () => playUiSound(300, 'triangle', 0.08));
+});
+
+
+// --- 4. NIESTANDARDOWY KURSOR MYSZY ---
+const cursorDot = document.getElementById("cursorDot");
+const cursorOutline = document.getElementById("cursorOutline");
+
+let mouseX = 0, mouseY = 0;
+let outlineX = 0, outlineY = 0;
+
+window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    if (cursorDot) {
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+    }
+});
+
+function animateCursor() {
+    outlineX += (mouseX - outlineX) * 0.15;
+    outlineY += (mouseY - outlineY) * 0.15;
+
+    if (cursorOutline) {
+        cursorOutline.style.left = `${outlineX}px`;
+        cursorOutline.style.top = `${outlineY}px`;
+    }
+
+    requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
+document.querySelectorAll('a, button, .tag, input').forEach(elem => {
+    elem.addEventListener('mouseenter', () => document.body.classList.add('hovered'));
+    elem.addEventListener('mouseleave', () => document.body.classList.remove('hovered'));
+});
+
+
+// --- 5. EKRAN WEJŚCIA, AUDIO I SUWAK GŁOŚNOŚCI ---
 const overlay = document.getElementById("overlay");
 const bgAudio = document.getElementById("bgAudio");
 const bgVideo = document.getElementById("bgVideo");
 const muteBtn = document.getElementById("muteBtn");
 const muteIcon = document.getElementById("muteIcon");
+const volumeSlider = document.getElementById("volumeSlider");
 
-// Kliknięcie w ekran wejściowy
 if (overlay) {
     overlay.addEventListener("click", () => {
-        // Schowanie czarnego ekranu z płynnym znikaniem
         overlay.classList.add("hidden");
         
-        // Start muzyki
         if (bgAudio) {
             bgAudio.play().then(() => {
                 if (muteIcon) muteIcon.className = "fa-solid fa-volume-high";
             }).catch(() => {});
         }
 
-        // Start wideo
         if (bgVideo && bgVideo.paused) {
             bgVideo.play().catch(() => {});
         }
     });
 }
 
-// Przycisk Wycisz / Włącz
+if (volumeSlider && bgAudio) {
+    volumeSlider.addEventListener("input", (e) => {
+        bgAudio.volume = e.target.value;
+        if (bgAudio.volume == 0) {
+            bgAudio.muted = true;
+            if (muteIcon) muteIcon.className = "fa-solid fa-volume-xmark";
+        } else {
+            bgAudio.muted = false;
+            if (muteIcon) muteIcon.className = "fa-solid fa-volume-high";
+        }
+    });
+}
+
 function toggleMute() {
     if (!bgAudio) return;
 
@@ -88,9 +164,11 @@ function toggleMute() {
     } else {
         if (bgAudio.muted) {
             bgAudio.muted = false;
+            if (volumeSlider) volumeSlider.value = bgAudio.volume || 1;
             if (muteIcon) muteIcon.className = "fa-solid fa-volume-high";
         } else {
             bgAudio.muted = true;
+            if (volumeSlider) volumeSlider.value = 0;
             if (muteIcon) muteIcon.className = "fa-solid fa-volume-xmark";
         }
     }
@@ -99,3 +177,44 @@ function toggleMute() {
 if (muteBtn) {
     muteBtn.addEventListener("click", toggleMute);
 }
+
+
+// --- 6. INTEGRACJA LANYARD DISCORD API ---
+const DISCORD_ID = "933668988150489088";
+
+async function fetchDiscordStatus() {
+    try {
+        const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
+        const json = await response.json();
+
+        if (!json.success) return;
+
+        const data = json.data;
+        const statusDot = document.getElementById("discordStatusDot");
+
+        // Aktualizacja kropki statusu
+        if (statusDot) {
+            statusDot.className = `status-dot ${data.discord_status}`;
+        }
+
+        // Spotify Activity
+        const spotifyCard = document.getElementById("spotifyCard");
+        const spotifyTrack = document.getElementById("spotifyTrack");
+        const spotifyArtist = document.getElementById("spotifyArtist");
+
+        if (data.listening_to_spotify && data.spotify) {
+            if (spotifyTrack) spotifyTrack.textContent = data.spotify.song;
+            if (spotifyArtist) spotifyArtist.textContent = `by ${data.spotify.artist}`;
+            if (spotifyCard) spotifyCard.classList.remove("hidden");
+        } else {
+            if (spotifyCard) spotifyCard.classList.add("hidden");
+        }
+
+    } catch (e) {
+        console.error("Błąd pobierania danych Lanyard API:", e);
+    }
+}
+
+// Pierwsze pobranie + odświeżanie co 10 sekund
+fetchDiscordStatus();
+setInterval(fetchDiscordStatus, 10000);
