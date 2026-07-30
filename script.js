@@ -4,13 +4,17 @@ function updateClock() {
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('liveClock').textContent = `${hours}:${minutes}:${seconds}`;
+    
+    const clockElement = document.getElementById('liveClock');
+    if (clockElement) {
+        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+    }
 }
 setInterval(updateClock, 1000);
 updateClock();
 
 
-// --- 3. TYPEWRITER ---
+// --- 2. TYPEWRITER (EFEKT PISANIA) ---
 const words = ["Niezastąpiony Wujek", "Programista", "Zjeb", "Inwestor"];
 let wordIndex = 0;
 let charIndex = 0;
@@ -18,6 +22,8 @@ let isDeleting = false;
 const typewriterElement = document.getElementById("typewriter");
 
 function typeEffect() {
+    if (!typewriterElement) return;
+
     const currentWord = words[wordIndex];
     
     if (isDeleting) {
@@ -44,47 +50,52 @@ function typeEffect() {
 typeEffect();
 
 
-// --- 4. WYCISZANIE / WŁĄCZANIE JEDNEGO UTWORU ---
+// --- 3. EKRAN WEJŚCIA (OVERLAY) I AUDIO/VIDEO ---
+const overlay = document.getElementById("overlay");
 const bgAudio = document.getElementById("bgAudio");
+const bgVideo = document.getElementById("bgVideo");
 const muteBtn = document.getElementById("muteBtn");
 const muteIcon = document.getElementById("muteIcon");
 
+// Kliknięcie w ekran wejściowy
+if (overlay) {
+    overlay.addEventListener("click", () => {
+        // Schowanie czarnego ekranu z płynnym znikaniem
+        overlay.classList.add("hidden");
+        
+        // Start muzyki
+        if (bgAudio) {
+            bgAudio.play().then(() => {
+                if (muteIcon) muteIcon.className = "fa-solid fa-volume-high";
+            }).catch(() => {});
+        }
+
+        // Start wideo
+        if (bgVideo && bgVideo.paused) {
+            bgVideo.play().catch(() => {});
+        }
+    });
+}
+
+// Przycisk Wycisz / Włącz
 function toggleMute() {
+    if (!bgAudio) return;
+
     if (bgAudio.paused) {
         bgAudio.play();
         bgAudio.muted = false;
-        muteIcon.className = "fa-solid fa-volume-high";
+        if (muteIcon) muteIcon.className = "fa-solid fa-volume-high";
     } else {
         if (bgAudio.muted) {
             bgAudio.muted = false;
-            muteIcon.className = "fa-solid fa-volume-high";
+            if (muteIcon) muteIcon.className = "fa-solid fa-volume-high";
         } else {
             bgAudio.muted = true;
-            muteIcon.className = "fa-solid fa-volume-xmark";
+            if (muteIcon) muteIcon.className = "fa-solid fa-volume-xmark";
         }
     }
 }
 
-muteBtn.addEventListener("click", toggleMute);
-
-// Automatyczny start przy pierwszym kliknięciu w dowolne miejsce strony (obejście blokady przeglądarek)
-document.addEventListener('click', () => {
-    if (bgAudio && bgAudio.paused) {
-        bgAudio.play().then(() => {
-            if (muteIcon) muteIcon.className = "fa-solid fa-volume-high";
-        }).catch(() => {
-            // Przeglądarka zablokowała autoplay
-        });
-    }
-}, { once: true });
-
-// Start wideo na telefonach
-const bgVideo = document.getElementById("bgVideo");
-
-if (bgVideo) {
-    document.addEventListener('touchstart', () => {
-        if (bgVideo.paused) {
-            bgVideo.play();
-        }
-    }, { once: true });
+if (muteBtn) {
+    muteBtn.addEventListener("click", toggleMute);
 }
