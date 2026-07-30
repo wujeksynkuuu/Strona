@@ -13,16 +13,16 @@
 <body>
 
     <!-- Animowane tło -->
-<video autoplay muted loop playsinline id="bgVideo">
-    <source src="Video.mov" type="video/mp4">
-</video>
+    <video autoplay muted loop playsinline id="bgVideo">
+        <source src="Video.mov" type="video/mp4">
+    </video>
 
     <!-- LEWY GÓRNY RÓG EKRANU -->
     <button id="muteBtn" class="mute-btn" title="Wycisz / Włącz dźwięk">
         <i class="fa-solid fa-volume-xmark" id="muteIcon"></i>
     </button>
 
-    <!-- PRAWY GÓRNY RÓG EKRANU -->
+    <!-- PRAWY GÓRNY RÓG EKRANU (Zostawiamy TYLKO ten jeden zegar) -->
     <div class="top-bar">
         <span class="location"><i class="fa-solid fa-location-dot"></i> POLSKA</span>
         <span id="liveClock" class="clock">00:00:00</span>
@@ -30,13 +30,7 @@
 
     <div class="main-layout">
         
-        <!-- Zegar na żywo w prawym górnym rogu -->
-        <div class="top-bar">
-            <span class="location"><i class="fa-solid fa-location-dot"></i> POLSKA</span>
-            <span id="liveClock" class="clock">00:00:00</span>
-        </div>
-
-        <!-- Główna treść -->
+        <!-- Główna treść (stąd usunąłem drugi zdublowany zegar) -->
         <main class="content">
             
             <div class="avatar-wrapper">
