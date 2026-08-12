@@ -208,15 +208,15 @@ body.hovered .cursor-outline {
 }
 
 .css-globe {
-    width: 72px;
-    height: 72px;
+    width: 76px;
+    height: 76px;
     border-radius: 50%;
     position: relative;
-    background: radial-gradient(circle at 30% 30%, #1c2a45 0%, #0c1424 70%, #04070d 100%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: radial-gradient(circle at 35% 35%, #2a2a2a 0%, #111111 70%, #020202 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 
-        0 0 20px rgba(0, 0, 0, 0.8),
-        0 0 10px rgba(56, 189, 248, 0.15);
+        0 0 20px rgba(0, 0, 0, 0.9),
+        0 0 12px rgba(255, 255, 255, 0.1);
     overflow: hidden;
 }
 
@@ -227,10 +227,11 @@ body.hovered .cursor-outline {
     left: 0;
     width: 200%;
     height: 100%;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><g fill="%2394a3b8" opacity="0.65"><path d="M15,12 L35,12 L45,22 L38,32 L28,40 L18,35 L10,22 Z"/><path d="M30,44 L46,46 L40,72 L33,85 L28,68 Z"/><path d="M42,4 L55,3 L52,14 L40,11 Z"/><path d="M92,10 L110,8 L114,25 L100,30 L88,22 Z"/><path d="M90,32 L120,33 L126,52 L112,80 L93,72 L86,48 Z"/><path d="M112,8 L172,10 L178,42 L148,50 L118,28 Z"/><path d="M152,60 L175,58 L172,78 L148,76 Z"/></g></svg>');
-    background-size: 200px 72px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100"><g fill="%23d1d5db"><path d="M15,12 L35,12 L45,22 L38,32 L28,40 L18,35 L10,22 Z"/><path d="M30,44 L46,46 L40,72 L33,85 L28,68 Z"/><path d="M42,4 L55,3 L52,14 L40,11 Z"/><path d="M92,10 L110,8 L114,25 L100,30 L88,22 Z"/><path d="M90,32 L120,33 L126,52 L112,80 L93,72 L86,48 Z"/><path d="M112,8 L172,10 L178,42 L148,50 L118,28 Z"/><path d="M152,60 L175,58 L172,78 L148,76 Z"/></g></svg>');
+    background-size: 200px 76px;
     background-repeat: repeat-x;
-    animation: rotateEarth 10s linear infinite;
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.8));
+    animation: rotateEarth 14s linear infinite;
 }
 
 .css-globe::after {
@@ -238,8 +239,8 @@ body.hovered .cursor-outline {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.85) 100%);
-    box-shadow: inset -6px -6px 12px rgba(0,0,0,0.9), inset 3px 3px 6px rgba(255,255,255,0.3);
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35) 0%, rgba(0, 0, 0, 0.1) 40%, rgba(0, 0, 0, 0.85) 80%, rgba(0, 0, 0, 0.98) 100%);
+    box-shadow: inset -8px -8px 16px rgba(0,0,0,0.95), inset 4px 4px 8px rgba(255,255,255,0.4);
     pointer-events: none;
 }
 
@@ -254,9 +255,9 @@ body.hovered .cursor-outline {
     left: 49%;
     width: 5px;
     height: 5px;
-    background-color: #22c55e;
+    background-color: #ffffff;
     border-radius: 50%;
-    box-shadow: 0 0 6px #22c55e, 0 0 10px #22c55e;
+    box-shadow: 0 0 6px #ffffff, 0 0 12px #ffffff;
     z-index: 5;
     animation: pulseLocation 1.8s infinite ease-in-out;
 }
