@@ -336,7 +336,7 @@ body.hovered .cursor-outline {
     justify-content: center;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .tag {
@@ -347,56 +347,6 @@ body.hovered .cursor-outline {
     font-size: 0.8rem;
     color: var(--text-secondary);
     letter-spacing: 1px;
-}
-
-/* --- KARTA SPOTIFY --- */
-.spotify-card {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border-color);
-    padding: 8px 18px;
-    border-radius: 30px;
-    margin: 0 auto 25px auto;
-    backdrop-filter: blur(12px);
-    transition: all 0.3s ease;
-}
-
-.spotify-card.hidden {
-    display: none !important;
-}
-
-.spotify-icon {
-    color: #1ed760;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-    animation: spinSlow 6s linear infinite;
-}
-
-.spotify-details {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    font-size: 0.8rem;
-    line-height: 1.3;
-}
-
-.spotify-track {
-    color: #ffffff;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-}
-
-.spotify-artist {
-    color: var(--text-secondary);
-    font-size: 0.75rem;
-}
-
-@keyframes spinSlow {
-    100% { transform: rotate(360deg); }
 }
 
 .action-buttons {
