@@ -6,9 +6,10 @@ function updateClock() {
     const seconds = String(now.getSeconds()).padStart(2, '0');
     
     const clockElement = document.getElementById('liveClock');
-    if (clockElement) {
-        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
-    }
+    const secondsElement = document.getElementById('liveSeconds');
+    
+    if (clockElement) clockElement.textContent = `${hours}:${minutes}`;
+    if (secondsElement) secondsElement.textContent = `:${seconds}`;
 }
 setInterval(updateClock, 1000);
 updateClock();
