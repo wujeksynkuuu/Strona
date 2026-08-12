@@ -194,7 +194,7 @@ body.hovered .cursor-outline {
     max-width: 30px;
 }
 
-/* --- PROFESJONALNY REALISTYCZNY GLOBUS 3D --- */
+/* --- PROFESJONALNY REALISTYCZNY GLOBUS 3D (SKUPIONY NA EUROPIE I POLSCE) --- */
 .globe-container {
     margin-top: 14px;
     opacity: 0;
@@ -212,8 +212,8 @@ body.hovered .cursor-outline {
     height: 76px;
     border-radius: 50%;
     position: relative;
-    background-color: #050b14;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: #071124;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     box-shadow: 
         0 0 25px rgba(0, 0, 0, 0.95),
         inset 0 0 15px rgba(0, 0, 0, 0.9);
@@ -223,15 +223,13 @@ body.hovered .cursor-outline {
 .css-globe::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 200%;
-    height: 100%;
+    inset: 0;
     background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-    background-size: 50% 100%;
-    background-repeat: repeat-x;
-    filter: invert(1) grayscale(100%) brightness(0.75) contrast(2);
-    animation: rotateEarth 18s linear infinite;
+    background-size: 240% 100%;
+    background-repeat: no-repeat;
+    /* Jaśniejsze, doskonale widoczne kontynenty */
+    filter: invert(1) grayscale(100%) brightness(1.35) contrast(2.2);
+    animation: rotateEurope 8s ease-in-out infinite;
 }
 
 .css-globe::after {
@@ -241,38 +239,39 @@ body.hovered .cursor-outline {
     border-radius: 50%;
     background: radial-gradient(
         circle at 30% 30%, 
-        rgba(255, 255, 255, 0.25) 0%, 
+        rgba(255, 255, 255, 0.3) 0%, 
         rgba(0, 0, 0, 0.1) 40%, 
         rgba(0, 0, 0, 0.85) 75%, 
         rgba(0, 0, 0, 0.98) 100%
     );
     box-shadow: 
         inset -10px -10px 20px rgba(0, 0, 0, 0.95), 
-        inset 4px 4px 10px rgba(255, 255, 255, 0.3);
+        inset 4px 4px 10px rgba(255, 255, 255, 0.35);
     pointer-events: none;
 }
 
-@keyframes rotateEarth {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+@keyframes rotateEurope {
+    0%, 100% { background-position: 53.5% 42%; }
+    50% { background-position: 51.5% 42%; }
 }
 
 .poland-pin {
     position: absolute;
-    top: 25%;
-    left: 52%;
+    top: 32%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 5px;
     height: 5px;
     background-color: #38bdf8;
     border-radius: 50%;
-    box-shadow: 0 0 8px #38bdf8, 0 0 15px #38bdf8;
+    box-shadow: 0 0 8px #38bdf8, 0 0 16px #38bdf8;
     z-index: 5;
     animation: pulseLocation 1.5s infinite ease-in-out;
 }
 
 @keyframes pulseLocation {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(2); opacity: 0.4; }
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(2.2); opacity: 0.4; }
 }
 
 /* --- GŁÓWNA KARTA Z EFEKTEM 3D TILT --- */
