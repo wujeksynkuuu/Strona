@@ -38,11 +38,23 @@
         </div>
     </div>
 
-    <!-- PRAWY GÓRNY RÓG - ZEGAR, LOKALIZACJA I LICZNIK WEJŚĆ -->
+    <!-- PRAWY GÓRNY RÓG - ZEGAR, LOKALIZACJA I GLOBUS -->
     <div class="top-bar">
-        <span class="views" title="Unikalne wyświetlenia"><i class="fa-solid fa-eye"></i> <span id="visitCount">...</span></span>
-        <span class="location"><i class="fa-solid fa-location-dot"></i> POLSKA</span>
-        <span id="liveClock" class="clock">00:00:00</span>
+        <div class="top-bar-content">
+            <div class="location">
+                <i class="fa-solid fa-location-dot"></i> Polska
+            </div>
+            <span class="separator">•</span>
+            <div class="clock">
+                <i class="fa-regular fa-clock"></i>
+                <span id="liveClock">00:00</span><span id="liveSeconds" class="seconds-hidden">:00</span>
+            </div>
+        </div>
+        <div class="globe-container">
+            <div class="css-globe">
+                <div class="poland-pin"></div>
+            </div>
+        </div>
     </div>
 
     <div class="main-layout">
@@ -90,8 +102,19 @@
 
             <!-- Sociale -->
             <div class="social-icons">
-                <a href="https://steamcommunity.com/id/wujek_z_ameryki" target="_blank" title="Steam"><i class="fa-brands fa-steam"></i></a>
-                <a href="https://www.tiktok.com/@wujek.synkuu" target="_blank" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://steamcommunity.com/id/wujek_z_ameryki" target="_blank" title="Steam">
+                    <i class="fa-brands fa-steam"></i>
+                </a>
+                <a href="https://www.tiktok.com/@wujek.synkuu" target="_blank" title="TikTok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="https://namemc.com/profile/wujek_synkuu.1" target="_blank" title="NameMC">
+                    <svg width="1em" height="1em" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.125em;">
+                        <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M12 22V12" stroke="currentColor" stroke-width="2"/>
+                        <path d="M22 7L12 12L2 7" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                </a>
             </div>
 
         </main>
